@@ -209,15 +209,14 @@ namespace Serilog.Sinks.Slack
             return new
             {
                 title = "Exception",
-                fallback = string.Format("Exception: {0} \n {1}", ex.Message, ex.StackTrace),
+                text = string.Format("Exception: {0} \n {1}", ex.Message, ex.StackTrace),
                 color = GetAttachmentColor(LogEventLevel.Fatal),
                 fields = new[]
                 {
                     CreateAttachmentField("Message", ex.Message),
                     CreateAttachmentField("Type", "`"+ex.GetType().Name+"`"),
                     CreateAttachmentField("Stack Trace", "```"+ex.StackTrace+"```", false)
-                },
-                mrkdwn_in = new[] { "fields" }
+                }
             };
         }
 
@@ -227,7 +226,7 @@ namespace Serilog.Sinks.Slack
             {
                 new
                 {
-                    fallback = string.Format("[{0}]{1}", log.Level, log.RenderMessage()),
+                    text = string.Format("[{0}]{1}", log.Level, log.RenderMessage()),
                     color = GetAttachmentColor(log.Level),
                     fields = new[]
                     {
